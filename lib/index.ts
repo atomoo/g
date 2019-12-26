@@ -63,16 +63,6 @@ export default class Graph {
             const Clazz = getShapeClazz<Edge, EdgeGraphOption>(shapeType);
             const startNodeCenter = [sourceNode.options.x, sourceNode.options.y];
             const endNodeCenter = [targetNode.options.x, targetNode.options.y];
-            const edgePoints1 = [
-                this.getEdgePoint(startNodeCenter, endNodeCenter, sourceNode.options.size / 2),
-                this.getEdgePoint(endNodeCenter, startNodeCenter, targetNode.options.size / 2)
-            ];
-            const edgeGraph1 = new Clazz({
-                start: edgePoints1[0],
-                end: edgePoints1[1]
-            });
-            edgeGraph1.render();
-            this.g.add(edgeGraph1.g);
             const edgePoints = [
                 startNodeCenter,
                 endNodeCenter

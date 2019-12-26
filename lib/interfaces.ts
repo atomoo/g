@@ -48,3 +48,18 @@ export interface ShapeConstructor {
     new (...args: any[]): Shape
 }
 
+
+export interface CircleShap {
+    center: Point;
+    r: number;
+};
+
+
+export type Point = [number, number];
+
+export interface BezierShap {
+    p0: Point;
+    p1: Point;
+    cp: Point;
+}
+
