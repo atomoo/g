@@ -68,8 +68,8 @@ export default class Graph {
                 endNodeCenter
             ];
             const edgeGraph = new Clazz({
-                start: edgePoints[0],
-                end: edgePoints[1]
+                start: sourceNode,
+                end: targetNode
             });
             edgeGraph.render();
             this.g.add(edgeGraph.g);

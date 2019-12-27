@@ -3,7 +3,7 @@ import Line from 'zrender/lib/graphic/shape/Line';
 import BezierCurve from 'zrender/lib/graphic/shape/BezierCurve';
 import Circle from 'zrender/lib/graphic/shape/Circle';
 import {registerShape} from './shape';
-import {Shape, EdgeGraphOption} from '../interfaces';
+import {Shape, EdgeGraphOption, Point} from '../interfaces';
 import { getCollisionBetweenCircleAndBezier } from '../helper/utils';
 
 class Edge implements Shape {
@@ -19,25 +19,27 @@ class Edge implements Shape {
     public render() {
         this.g = new Group();
         const {start, end} = this.options;
+        const startCenter = [start.options.x, start.options.y];
+        const endCenter = [end.options.x, end.options.y];
         const line = new Line({
             shape: {
-                x1: start[0],
-                y1: start[1],
-                x2: end[0],
-                y2: end[1]
+                x1: startCenter[0],
+                y1: startCenter[1],
+                x2: endCenter[0],
+                y2: endCenter[1]
             }
         });
         this.g.add(line);
         const cp = [
-            (start[ 0 ] + end[ 0 ] ) / 2 - ( start[ 1 ] - end[1]) * 0.8,
-            ( start[ 1 ] + end[ 1 ] ) / 2 - ( end[ 0 ] - start[0]) * 0.8
+            (startCenter[0] + endCenter[0] ) / 2 - (startCenter[1] - endCenter[1]) * 0.8,
+            (startCenter[1] + endCenter[1] ) / 2 - (endCenter[0] - startCenter[0]) * 0.8
         ]
         const curveLine = new BezierCurve({
             shape: {
-                x1: start[0],
-                y1: start[1],
-                x2: end[0],
-                y2: end[1],
+                x1: startCenter[0],
+                y1: startCenter[1],
+                x2: endCenter[0],
+                y2: endCenter[1],
                 cpx1: cp[0],
                 cpy1: cp[1],
             },
@@ -46,8 +48,9 @@ class Edge implements Shape {
             },
         });
         const p = getCollisionBetweenCircleAndBezier(
-            {center: [start[0], start[1]], r: 30},
-            {p0: [start[0], start[1]], p1: [end[0], end[1]], cp: [cp[0], cp[1]]});
+            {center: endCenter as Point, r: end.options.size / 2},
+            {p0: startCenter as Point, p1: endCenter as Point, cp: [cp[0], cp[1]]});
+        
         const c = new Circle({
             shape: {
                 cx: p[0],

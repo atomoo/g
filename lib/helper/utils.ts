@@ -14,17 +14,16 @@ function distance(p0: Point, p1: Point): number {
 }
 
 export function getCollisionBetweenCircleAndBezier(circle: CircleShap, bezier: BezierShap) {
-    let tempDistance = circle.r;
+    let tempDistance = Infinity;
     let tempPoint = circle.center;
     for (let index = 0; index < 100; index++) {
         const p = quadraticBezier(bezier.p0, bezier.cp, bezier.p1, index / 100);
-        console.log(p);
         const d = Math.abs(distance(circle.center, p) - circle.r);
         if (d < tempDistance) {
             tempDistance = d;
             tempPoint = p;
         }
-        if (d > circle.r) {
+        else {
             break;
         }
     }

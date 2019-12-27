@@ -1,3 +1,5 @@
+import Node from "./view/node";
+
 /**
  * @file interfaces
  * @author y
@@ -26,8 +28,8 @@ export interface EdgeOption {
 }
 
 export interface EdgeGraphOption {
-    start: number[];
-    end: number[];
+    start: Node;
+    end: Node;
 }
 
 export interface GraphData {
@@ -41,6 +43,7 @@ export interface ShapeMap {
 
 export interface Shape {
     g: any;
+    options: any;
     render(container?: any): any;
 };
 
