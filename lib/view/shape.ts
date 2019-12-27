@@ -1,10 +1,10 @@
-import { ShapeMap, Shape } from "../interfaces";
+import {IShape, IShapeMap} from '../interfaces';
 
-const shapeClazz: ShapeMap = {};
+const shapeClazz: IShapeMap = {};
 
 type Type<T, K> = new (options: K) => T;
 
-export function registerShape<T extends Shape, K>(shapeType: string, clazz: Type<T, K>) {
+export function registerShape<T extends IShape, K>(shapeType: string, clazz: Type<T, K>) {
     if (shapeClazz[shapeType]) {
         throw new Error('Duplicate shape type');
     }
@@ -13,6 +13,6 @@ export function registerShape<T extends Shape, K>(shapeType: string, clazz: Type
     }
 }
 
-export function getShapeClazz<T extends Shape, K>(shapeType: string): Type<T, K> {
+export function getShapeClazz<T extends IShape, K>(shapeType: string): Type<T, K> {
     return shapeClazz[shapeType] as Type<T, K>;
 }

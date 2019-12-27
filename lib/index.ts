@@ -4,50 +4,50 @@
  */
 import zrender from 'zrender';
 import Circle from 'zrender/lib/graphic/shape/Circle';
-import {GraphOption, GraphData, NodeOption, EdgeOption, EdgeGraphOption} from './interfaces';
-import {getShapeClazz} from './view';
-import Node from './view/node';
-import Edge from './view/edge';
 import Vector from './helper/vector';
+import {IEdgeGraphOption, IEdgeOption, IGraphData, IGraphOption, INodeOption} from './interfaces';
+import {getShapeClazz} from './view';
+import Edge from './view/edge';
+import Node from './view/node';
 
 export default class Graph {
 
-    private _zr: any;
-
-    public data: GraphData;
+    public data: IGraphData;
 
     public g: any;
+
+    private zr: any;
 
     private nodes: Node[] = [];
 
     private edges: Edge[] = [];
 
-    constructor(dom: HTMLElement, options?: GraphOption) {
+    constructor(dom: HTMLElement, options?: IGraphOption) {
         options = Object.assign(
             {},
             {
                 renderer: 'canvas',
                 devicePixelRatio: 2,
                 width: 'auto',
-                height: 'auto'
+                height: 'auto',
             },
-            options
+            options,
         );
-        this._zr = zrender.init(dom, options);
+        this.zr = zrender.init(dom, options);
     }
 
-    public setData(data: GraphData) {
+    public setData(data: IGraphData) {
         this.data = data;
     }
 
     public getNodeById(id: string): Node {
-        return this.nodes.find(node => node.id === id);
+        return this.nodes.find((node) => node.id === id);
     }
 
-    public addNode(node: NodeOption) {
+    public addNode(node: INodeOption) {
         if (!this.getNodeById(node.id)) {
             const shapeType = node.shape || 'Node';
-            const NodeClazz = getShapeClazz<Node, NodeOption>(shapeType);
+            const NodeClazz = getShapeClazz<Node, INodeOption>(shapeType);
             const nodeGraph = new NodeClazz(node);
             nodeGraph.render();
             this.nodes.push(nodeGraph);
@@ -55,21 +55,21 @@ export default class Graph {
         }
     }
 
-    public addEdge(edge: EdgeOption) {
+    public addEdge(edge: IEdgeOption) {
         const sourceNode = this.getNodeById(edge.source);
         const targetNode = this.getNodeById(edge.target);
         if (sourceNode && targetNode) {
             const shapeType = edge.shape || 'Edge';
-            const Clazz = getShapeClazz<Edge, EdgeGraphOption>(shapeType);
+            const Clazz = getShapeClazz<Edge, IEdgeGraphOption>(shapeType);
             const startNodeCenter = [sourceNode.options.x, sourceNode.options.y];
             const endNodeCenter = [targetNode.options.x, targetNode.options.y];
             const edgePoints = [
                 startNodeCenter,
-                endNodeCenter
+                endNodeCenter,
             ];
             const edgeGraph = new Clazz({
                 start: sourceNode,
-                end: targetNode
+                end: targetNode,
             });
             edgeGraph.render();
             this.g.add(edgeGraph.g);
@@ -80,16 +80,16 @@ export default class Graph {
     public render() {
         this.g = new zrender.Group();
         if (Array.isArray(this.data.nodes)) {
-            this.data.nodes.forEach(node => {
+            this.data.nodes.forEach((node) => {
                 this.addNode(node);
             });
         }
         if (Array.isArray(this.data.edges)) {
-            this.data.edges.forEach(edge => {
+            this.data.edges.forEach((edge) => {
                 this.addEdge(edge);
             });
         }
-        this._zr.add(this.g);
+        this.zr.add(this.g);
     }
 
     private getEdgePoint(startNodeCenter: number[], endNodeCenter: number[], r: number) {
@@ -97,8 +97,7 @@ export default class Graph {
         const normal = v.normalize();
         return [
             startNodeCenter[0] + normal.x * r,
-            startNodeCenter[1] + normal.y * r
+            startNodeCenter[1] + normal.y * r,
         ];
     }
 }
-
