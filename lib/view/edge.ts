@@ -21,18 +21,9 @@ class Edge implements Shape {
         const {start, end} = this.options;
         const startCenter = [start.options.x, start.options.y];
         const endCenter = [end.options.x, end.options.y];
-        const line = new Line({
-            shape: {
-                x1: startCenter[0],
-                y1: startCenter[1],
-                x2: endCenter[0],
-                y2: endCenter[1]
-            }
-        });
-        this.g.add(line);
         const cp = [
-            (startCenter[0] + endCenter[0] ) / 2 - (startCenter[1] - endCenter[1]) * 0.8,
-            (startCenter[1] + endCenter[1] ) / 2 - (endCenter[0] - startCenter[0]) * 0.8
+            (startCenter[0] + endCenter[0] ) / 2 - (startCenter[1] - endCenter[1]) * 0.7,
+            (startCenter[1] + endCenter[1] ) / 2 - (endCenter[0] - startCenter[0]) * 0.7
         ]
         const curveLine = new BezierCurve({
             shape: {
