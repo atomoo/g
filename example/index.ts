@@ -38,8 +38,8 @@ function init() {
 
 init();
 
-if (module.hot) {
-    module.hot.accept('../lib/index', () => {
+if ((module as __WebpackModuleApi.Module).hot) {
+    (module as __WebpackModuleApi.Module).hot.accept('../lib/index', () => {
         init();
     });
 }
