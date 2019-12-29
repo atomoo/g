@@ -1,22 +1,22 @@
 import Group from 'zrender/lib/container/Group';
 import Circle from 'zrender/lib/graphic/shape/Circle';
-import {INodeOption, IShape} from '../interfaces';
+import {NodeOption, Shape} from '../interfaces';
 import {registerShape} from './shape';
 
-class Node implements IShape {
+class Node implements Shape {
 
     public g: any;
 
     public id: string;
 
-    public options: INodeOption;
+    public options: NodeOption;
 
-    constructor(options: INodeOption) {
+    constructor(options: NodeOption) {
         this.id = options.id;
         this.options = options;
     }
 
-    public render() {
+    public render(): void {
         this.g = new Group();
         this.g.position = [this.options.x, this.options.y];
         const circle = new Circle({
@@ -44,6 +44,6 @@ class Node implements IShape {
     }
 }
 
-registerShape<Node, INodeOption>('Node', Node);
+registerShape<Node, NodeOption>('Node', Node);
 
 export default Node;

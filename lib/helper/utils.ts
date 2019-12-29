@@ -1,4 +1,4 @@
-import {IBezierShap, ICircleShap, Point} from '../interfaces';
+import {BezierShap, CircleShap, Point} from '../interfaces';
 
 function quadraticBezier(p0: Point, cp: Point, p1: Point, t: number): Point {
     const k = 1 - t;
@@ -11,7 +11,7 @@ function distance(p0: Point, p1: Point): number {
     return Math.sqrt(Math.pow(p0[0] - p1[0], 2) + Math.pow(p0[1] - p1[1], 2));
 }
 
-export function getCollisionBetweenCircleAndBezier(circle: ICircleShap, bezier: IBezierShap) {
+export function getCollisionBetweenCircleAndBezier(circle: CircleShap, bezier: BezierShap): Point {
     let tempDistance = Infinity;
     let tempPoint = circle.center;
     for (let index = 0; index < 100; index++) {

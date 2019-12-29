@@ -6,14 +6,14 @@ import Node from './view/node';
  */
 
 // 配置项，参考zrender
-export interface IGraphOption {
+export interface GraphOption {
     renderer: 'canvas' | 'svg' | 'vml';
     devicePixelRatio: number;
     width: number | string;
     height: number | string;
 }
 
-export interface INodeOption {
+export interface NodeOption {
     id: string;
     x: number;
     y: number;
@@ -21,42 +21,42 @@ export interface INodeOption {
     size?: number;
 }
 
-export interface IEdgeOption {
+export interface EdgeOption {
     source: string;
     target: string;
     shape?: string;
 }
 
-export interface IEdgeGraphOption {
+export interface EdgeGraphOption {
     start: Node;
     end: Node;
 }
 
-export interface IGraphData {
-    nodes: INodeOption[];
-    edges: IEdgeOption[];
+export interface GraphData {
+    nodes: NodeOption[];
+    edges: EdgeOption[];
 }
 
-export interface IShapeMap {
+export interface ShapeMap {
     [key: string]: ShapeConstructor;
 }
 
-export interface IShape {
+export interface Shape {
     g: any;
     options: any;
     render(container?: any): any;
 }
 
-export type ShapeConstructor = new (...args: any[]) => IShape;
+export type ShapeConstructor = new (...args: any[]) => Shape;
 
-export interface ICircleShap {
+export interface CircleShap {
     center: Point;
     r: number;
 }
 
 export type Point = [number, number];
 
-export interface IBezierShap {
+export interface BezierShap {
     p0: Point;
     p1: Point;
     cp: Point;

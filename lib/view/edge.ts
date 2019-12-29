@@ -2,20 +2,20 @@ import Group from 'zrender/lib/container/Group';
 import BezierCurve from 'zrender/lib/graphic/shape/BezierCurve';
 import Circle from 'zrender/lib/graphic/shape/Circle';
 import {getCollisionBetweenCircleAndBezier} from '../helper/utils';
-import {IEdgeGraphOption, IShape, Point} from '../interfaces';
+import {EdgeGraphOption, Shape, Point} from '../interfaces';
 import {registerShape} from './shape';
 
-class Edge implements IShape {
+class Edge implements Shape {
 
     public g: Group;
 
-    public options: IEdgeGraphOption;
+    public options: EdgeGraphOption;
 
-    constructor(options: IEdgeGraphOption) {
+    constructor(options: EdgeGraphOption) {
         this.options = options;
     }
 
-    public render() {
+    public render(): void {
         this.g = new Group();
         const {start, end} = this.options;
         const startCenter = [start.options.x, start.options.y];
@@ -57,6 +57,6 @@ class Edge implements IShape {
     }
 }
 
-registerShape<Edge, IEdgeGraphOption>('Edge', Edge);
+registerShape<Edge, EdgeGraphOption>('Edge', Edge);
 
 export default Edge;
